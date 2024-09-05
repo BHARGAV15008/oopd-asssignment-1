@@ -3,6 +3,8 @@
 *.exe
 *.png
 *.pdf
+.gitignore
+
 
 # Folders to be ignored
 .vscode/
