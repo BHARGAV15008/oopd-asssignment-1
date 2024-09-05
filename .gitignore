@@ -2,6 +2,7 @@
 *.o
 *.exe
 *.png
+*.pdf
 
 # Folders to be ignored
 .vscode/
