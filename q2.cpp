@@ -1,10 +1,10 @@
 #include <iostream>
-#include <vector>
 #include <fstream>
 #include <sstream>
 #include <string>
 #include <iomanip>
 using namespace std;
+int noOfEntry = 0; // initially count is 0
 
 struct PriceInflation {
     int year;
@@ -13,7 +13,7 @@ struct PriceInflation {
 };
 
 class LongtermCapitalGainsTax {
-    vector <PriceInflation> infData;
+    PriceInflation* infData;
     long bPrice;
     int sYear;
     int bYear;
@@ -26,13 +26,19 @@ class LongtermCapitalGainsTax {
             this->bYear = 2010;
         }
 
-        vector<PriceInflation> loadData(string &filepath) {
+        PriceInflation* loadData(string &filepath) {
             ifstream infCsv(filepath);
-            vector <PriceInflation> datas;
             string entry;
             PriceInflation records;
+            while (getline(infCsv, entry))
+                if (!entry.empty()) noOfEntry++;
+
+            PriceInflation* datas = new PriceInflation[noOfEntry - 1];
+            infCsv.clear();
+            infCsv.seekg(0);
             getline(infCsv, entry);
 
+            int idx = 0;
             while (getline(infCsv, entry)) {
                 stringstream ss(entry);
                 string dt;
@@ -47,7 +53,7 @@ class LongtermCapitalGainsTax {
                 getline(ss, oItem, ',');
                 records.inf = stod(oItem);
 
-                datas.push_back(records);
+                datas[idx++] = records;
             }
             return datas;
         }
@@ -55,24 +61,24 @@ class LongtermCapitalGainsTax {
         float calcSellingPrice() {
             double eSellPrice = this->bPrice;
             // // Approach 1:
-            // for (auto &rec: this->infData) {
+            // for (int i = 0; i < noOfEntry; i++) {
             //     if (this->sYear < 2024){
-            //         if (rec.year > this->bYear && rec.year <= this->sYear)
-            //             eSellPrice *= (1 + (rec.gPrices - rec.inf) / 100);
+            //         if (infData[i].year > this->bYear && infData[i].year <= this->sYear)
+            //             eSellPrice *= (1 + (infData[i].gPrices - infData[i].inf) / 100);
             //     }
             //     else {
-            //         if (rec.year > this->bYear && rec.year <= this->sYear)
-            //             eSellPrice *= (1 + (rec.gPrices) / 100);
+            //         if (infData[i].year > this->bYear && infData[i].year <= this->sYear)
+            //             eSellPrice *= (1 + (infData[i].gPrices) / 100);
             //     }
             // }
 
             // Approach 2:
-            for (auto &rec: this->infData) {
-                if (rec.year > this->bYear && rec.year <= this->sYear){
-                    if (rec.year < 2024)
-                        eSellPrice *= (1 + (rec.gPrices - rec.inf) / 100);
+            for (int i = 0; i < noOfEntry; i++){
+                if (infData[i].year > this->bYear && infData[i].year <= this->sYear){
+                    if (infData[i].year < 2024)
+                        eSellPrice *= (1 + (infData[i].gPrices - infData[i].inf) / 100);
                     else
-                        eSellPrice *= (1 + (rec.gPrices) / 100);
+                        eSellPrice *= (1 + (infData[i].gPrices) / 100);
                 }
             }
             return eSellPrice;
