@@ -52,6 +52,25 @@ class LongtermCapitalGainsTax {
             return datas;
         }
 
+        float calcSellingPrice() {
+            double eSellPrice = this->bPrice;
+            for (auto &rec: this->infData) {
+                if (rec.year >= this->bYear && rec.year <= this->sYear) {
+                    eSellPrice *= (1 + (rec.gPrices - rec.inf) / 100);
+                }
+            }
+            return eSellPrice;
+        }
+
+        float calcProfit() {
+            double sPrice = this->calcSellingPrice();
+            return sPrice - this->bPrice;
+        }
+
+        float calcLTG() {
+            double profit = this->calcProfit();
+            return profit <= 0 ? 0 : 0.2 * profit;
+        }
 };
 
 int main() {
@@ -62,5 +81,8 @@ int main() {
 
     LongtermCapitalGainsTax ltcg = LongtermCapitalGainsTax(filepath, sYear);
     
+    cout << "Selling Price at " << fixed << setprecision(2) << sYear << " is " << ltcg.calcSellingPrice() << endl;
+    cout << "LTCG Tax at " << fixed << setprecision(2) << sYear << " is " << ltcg.calcLTG() << endl;
+
     return 0;
 }
