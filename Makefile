@@ -4,7 +4,6 @@ test:
 	g++ -g -o debug1 q1.o
 	g++ -O3 -o optimize1 q1.o
 
-#	./debug1
 	./optimize1
 
 
@@ -13,5 +12,4 @@ test:
 	g++ -g -o debug2 q2.o
 	g++ -O3 -o optimize2 q2.o
 
-#	./debug2
 	./optimize2
