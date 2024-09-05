@@ -1,1 +1,8 @@
+# Files to be ignored
+*.o
+*.exe
+.gitignore
+*.png
+
+# Folders to be ignored
 .vscode/

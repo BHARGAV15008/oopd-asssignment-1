@@ -54,10 +54,27 @@ class LongtermCapitalGainsTax {
 
         float calcSellingPrice() {
             double eSellPrice = this->bPrice;
-            for (auto &rec: this->infData)
-                if (rec.year > this->bYear && rec.year <= this->sYear)
-                    eSellPrice *= (1 + (rec.gPrices - rec.inf) / 100);
-                    
+            // // Approach 1:
+            // for (auto &rec: this->infData) {
+            //     if (this->sYear < 2024){
+            //         if (rec.year > this->bYear && rec.year <= this->sYear)
+            //             eSellPrice *= (1 + (rec.gPrices - rec.inf) / 100);
+            //     }
+            //     else {
+            //         if (rec.year > this->bYear && rec.year <= this->sYear)
+            //             eSellPrice *= (1 + (rec.gPrices) / 100);
+            //     }
+            // }
+
+            // Approach 2:
+            for (auto &rec: this->infData) {
+                if (rec.year > this->bYear && rec.year <= this->sYear){
+                    if (rec.year < 2024)
+                        eSellPrice *= (1 + (rec.gPrices - rec.inf) / 100);
+                    else
+                        eSellPrice *= (1 + (rec.gPrices) / 100);
+                }
+            }
             return eSellPrice;
         }
 
@@ -68,7 +85,7 @@ class LongtermCapitalGainsTax {
 
         float calcLTG() {
             double profit = this->calcProfit();
-            return profit <= 0 ? 0 : 0.2 * profit;
+            return this->sYear < 2024 ? (profit <= 0 ? 0 : 0.2 * profit) : (profit <= 0 ? 0 : 0.125 * profit);
         }
 };
 
