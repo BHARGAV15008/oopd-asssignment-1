@@ -4,36 +4,36 @@
 #include <string>
 #include <iomanip>
 using namespace std;
-int noOfEntry = 0; // initially count is 0
+int noOfEntry1 = 0; // initially count is 0
 
-struct PriceInflation {
+struct PriceInflation1 {
     int year;
     float gPrices;
     float inf;
 };
 
-class LongtermCapitalGainsTax {
-    PriceInflation* infData;
+class LongtermCapitalGainsTax1 {
+    PriceInflation1* infData;
     long bPrice;
     int sYear;
     int bYear;
 
     public:
-        LongtermCapitalGainsTax(string &filepath, int sYear) {
+        LongtermCapitalGainsTax1(string &filepath, int sYear) {
             this->infData = loadData(filepath);
             this->bPrice = 5000000;
             this->sYear = sYear;
             this->bYear = 2010;
         }
 
-        PriceInflation* loadData(string &filepath) {
+        PriceInflation1* loadData(string &filepath) {
             ifstream infCsv(filepath);
             string entry;
-            PriceInflation records;
+            PriceInflation1 records;
             while (getline(infCsv, entry))
-                if (!entry.empty()) noOfEntry++;
+                if (!entry.empty()) noOfEntry1++;
 
-            PriceInflation* datas = new PriceInflation[noOfEntry - 1];
+            PriceInflation1* datas = new PriceInflation1[noOfEntry1 - 1];
             infCsv.clear();
             infCsv.seekg(0);
             getline(infCsv, entry);
@@ -60,7 +60,7 @@ class LongtermCapitalGainsTax {
 
         float calcSellingPrice() {
             double eSellPrice = this->bPrice;
-            for (int i = 0; i < noOfEntry; i++)
+            for (int i = 0; i < noOfEntry1; i++)
                 if (infData[i].year > this->bYear && infData[i].year <= this->sYear)
                     eSellPrice *= (1 + (infData[i].gPrices - infData[i].inf) / 100);
                     
@@ -78,16 +78,3 @@ class LongtermCapitalGainsTax {
         }
 };
 
-int main() {
-    long bPrice, bYear, sYear;
-    string filepath = "price-inflation.csv";
-    cout << "Enter your Selling year (2010 - 2030): ";
-    cin >> sYear;
-
-    LongtermCapitalGainsTax ltcg = LongtermCapitalGainsTax(filepath, sYear);
-    
-    cout << "Selling Price at " << fixed << setprecision(2) << sYear << " is " << ltcg.calcSellingPrice() << endl;
-    cout << "LTCG Tax at " << fixed << setprecision(2) << sYear << " is " << ltcg.calcLTG() << endl;
-
-    return 0;
-}

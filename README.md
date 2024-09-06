@@ -41,8 +41,10 @@
 - - _Find LTCG Tax_
 
 
-> #### Here we have to create make file it shown like that: ![alt text](image-6.png)
+> #### Here we have to create make file it shown like that: ![alt text](image.png)
 > > - **In Makefile we write some terminal commands.**
 > > - ***-c :** command used to compiler cpp file without creating object file (.o).*
 > > - ***-g :** command used to Debuggs compiled file and **' -o '** used to assing name of the output files like debug1, debug2, so on. [Shown in image].*
 > > - ***-O3 :** This is called obtimised flag command which helps to optimize our code.* 
+
+>>>> REFERENCE: https://en.cppreference.com/w/ and youtube
