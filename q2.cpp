@@ -116,13 +116,16 @@ int main()
 
     LongtermCapitalGainsTax1 ltcg1 = LongtermCapitalGainsTax1(filepath, sYear);
     LongtermCapitalGainsTax ltcg = LongtermCapitalGainsTax(filepath, sYear);
-
+    cout << "Question 1: Evaluation " << endl;
     cout << "Q1: Selling Price at " << fixed << setprecision(2) << sYear << " is " << ltcg1.calcSellingPrice() << endl;
     cout << "Q1: LTCG Tax at " << fixed << setprecision(2) << sYear << " is " << ltcg1.calcLTG() << endl;
+    cout << endl;
+    cout << "Question 2: Evaluation " << endl;
     cout << "Q2: Selling Price at " << fixed << setprecision(2) << sYear << " is " << ltcg.calcSellingPrice() << endl;
     cout << "Q2: LTCG Tax at " << fixed << setprecision(2) << sYear << " is " << ltcg.calcLTG() << endl;
-
-    cout << "Difference: " << ltcg.calcLTG() - ltcg1.calcLTG() << endl;
+    cout << endl;
+    cout << "Comparison between First and Second Scheme." << endl;
+    cout << "Difference (Scheme After 2024 - Scheme Before 2024): " << ltcg.calcLTG() - ltcg1.calcLTG() << endl;
 
     return 0;
 }
