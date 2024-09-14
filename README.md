@@ -28,7 +28,7 @@
 - > - _On and After 2024:_ ![alt text](image-1.png)
 - > _Profit:_
 - > - _Before 2024:_ ![alt text](image-2.png)
-- > - _On and After 2024:_ ![alt text](image.png)
+- > - _On and After 2024:
 - > _LTCG Tax:_
 - > - _Before 2024 (Here we takes 20% taxPercentage on profit):_  ![alt text](image-3.png)
 - > - _On and After 2024 (But in and after 2024 we takes 12.5% taxPercentage on profit according new policy):_ ![alt text](image-5.png)
